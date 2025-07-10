@@ -129,13 +129,82 @@ The kubeconfig file contains all the necessary information for authentication us
    ```bash
      sh 'kubectl create deployment.yaml nginx-deployment --image=nginx'
    ```                                                             
-3. Define the environment variables that will be used in the connection.
+3. Define the environment variables that will be used in the connection unde the dplouy stage section.
    ```bash
-   environment{
-   
-
+     stage('deploy'){
+       environment{
+         AWS_ACCESS_KEY_ID = credentials('jenkins_aws_access_key_id')
+         AWS_SECRET_ACCESS_KEY = credentials('jenkins-aws_secret_access_key')
+     }
+     steps{
+       script {
+         echo 'deploying docker image...'
+         sh 'kubectl get nodes'
+         sh 'kubectl create deployment nginx-deployment --image=nginx'
+       }
+     }
    }
    ```
+
+<details><summary><strong>Using AWS Plugging/strong></summary>
+  When using the first approach, the pipeline did not work correctly due to "ls: failed to verify certificate: x509: certificate signed by unknown authority", so I decided to work with the AWS credentials  plugins instead.
+
+  1. Download the AWS Credentials Plugin in Jenkins. This can be done from Dashboard > Manage Jenkins > Plugins > Available Plugins
+  2. Create a new Global Credentials using the Kind: AWS Credentials, add the Key ID, description and the Key.
+  3. Modify the Jenkinsfile to use the key
+      ```bash
+
+              stage('deploy') {
+        
+                     
+                    steps {
+        
+                        withCredentials([[
+                            $class: 'AmazonWebServicesCredentialsBinding',
+                            credentialsId: 'AWS_jenkins_key'
+        
+                        ]]) {
+        
+                            script {
+                                echo 'Generating kubeconfig...'
+                                
+                                sh '''
+                                    aws eks update-kubeconfig \
+                                      --region $AWS_REGION \
+                                      --name $CLUSTER_NAME \
+                                      --kubeconfig $KUBECONFIG
+                                '''
+        
+                                echo 'deploying docker image...'
+                                sh 'kubectl get nodes'
+                                sh 'kubectl create deployment nginx-deployment --image=nginx'
+                            }
+                        }
+                    }
+                }
+```
+4. We export the environment variables: In this case, we generate the kubeconfig file in the pipeline: This requires Jenkins agents to have:
+
+* AWS CLI installed
+* AWS credentials configured (via withCredentials)
+* EKS Region and cluster name available
+
+  ```bash
+     environment {
+        KUBECONFIG = "${env.WORKSPACE}/kubeconfig"
+        AWS_REGION = 'us-east-2'
+        CLUSTER_NAME = 'demo-cluster'
+
+    }
+
+  ```
+
+  
+</details>
+
+   
+
+
    
 
 
