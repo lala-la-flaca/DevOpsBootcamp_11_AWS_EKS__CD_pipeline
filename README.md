@@ -221,7 +221,7 @@ Ensure the Jenkins agent or container has:
     }
 
   ```
-
+<img src="" width=500 />
   
 </details>
 
