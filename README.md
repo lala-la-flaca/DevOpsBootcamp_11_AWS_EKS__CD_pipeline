@@ -2,6 +2,8 @@
 ## 📦 Demo 4
 This project is part of **Module 11: Kubernetes on AWS (EKS)** in the **TWN DevOps Bootcamp**. The goal of this demo is to implement CD by automatically deploying a containerized application to an **Amazon EKS cluster** using a **Jenkins pipeline**.
 
+[GitLab Repo](https://gitlab.com/devopsbootcamp4095512/devopsbootcamp_8_jenkins_pipeline/-/tree/deploy-on-k8s?ref_type=heads)
+
 ## 📌 Objective
 
 
