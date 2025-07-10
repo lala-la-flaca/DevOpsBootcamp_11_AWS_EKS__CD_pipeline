@@ -111,15 +111,15 @@ The kubeconfig file is essential for authenticating and interacting with the EKS
                       - "token"
                       - "-i"
                       - <cluster-name>
-   ```
+     ```
      
 4. Save the file.
-5. Enter the Jenkins container as Jenkins User
+   
+6. Enter the Jenkins container as Jenkins User
   ```bash
-    docker exec -u 0 -it <container_id> bash
     docker exec -it 6db6fdd7ed8f bash
   ```
-<img src="https://github.com/lala-la-flaca/DevOpsBootcamp_11_AWS_EKS__CD_pipeline/blob/main/Img/108%20enter%20container%20as%20jenkins%20user.png" width=800 />
+  <img src="https://github.com/lala-la-flaca/DevOpsBootcamp_11_AWS_EKS__CD_pipeline/blob/main/Img/108%20enter%20container%20as%20jenkins%20user.png" width=800 />
 
 7. Create the .kube directory inside the Jenkins home directory:
    ```bash
@@ -141,7 +141,6 @@ The kubeconfig file is essential for authenticating and interacting with the EKS
     ```bash
       docker exec -it 6db6fdd7ed8f bash
     ```
-    <img src="" width=800 />
 
 11. Verify the config file is available in the .kube directory
   ```bash
