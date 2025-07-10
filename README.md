@@ -158,12 +158,12 @@ The kubeconfig file is essential for authenticating and interacting with the EKS
 
 <details><summary><strong> Using AWS Pluging </strong></summary>
  If you encounter certificate verification issues such as: "ls: failed to verify certificate: x509: certificate signed by unknown authority". You can use the AWS Credentials Plugin to manage AWS authentication more securely and reliably.
- Prerequisites
-  * Ensure the Jenkins agent or container has:
-  * AWS CLI installed
-  * kubectl installed
-  * Access to the required AWS IAM role
-  * EKS cluster name and region are defined in the environment.
+ Prerequisites:
+  Ensure the Jenkins agent or container has:
+    * AWS CLI installed.
+    * kubectl installed.
+    * Access to the required AWS IAM role.
+    * EKS cluster name and region are defined in the environment.
 
   1. Install the AWS Credentials plugin:
   2. Go to Manage Jenkins > Plugins > Available Plugins.
@@ -174,9 +174,7 @@ The kubeconfig file is essential for authenticating and interacting with the EKS
   5. Update the Jenkinsfile to use the AWS credentials plugin
       ```bash
 
-              stage('deploy') {
-        
-                     
+              stage('deploy') { 
                     steps {
         
                         withCredentials([[
@@ -202,8 +200,8 @@ The kubeconfig file is essential for authenticating and interacting with the EKS
                         }
                     }
                 }
-```
-6. We export the environment variables: In this case, we generate the kubeconfig file in the pipeline. This requires Jenkins agents to have:
+      ```
+6. Export the environment variables: In this case, we generate the kubeconfig file in the pipeline. This requires Jenkins agents to have:
 
   * AWS CLI installed
   * AWS credentials configured (via withCredentials)
